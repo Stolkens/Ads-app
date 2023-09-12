@@ -1,0 +1,8 @@
+[
+  { "title": "Mieszkanie na Stargańcu", "location": "Katowice", "image": "dadsads", "description": "Sprzedam ładne, dwupokojowe mieszkanie", 
+  "dateOfPub": "25-04-2023", "userId": "65001fcdb00eb5c11f34b7de"},
+  { "title":  "Gitara ze wzmacniaczem", "location": "Sosnowiec", "image": "dadsads", "description": "Sprzedam gitare elektroakustyczną ze wzmacniaczem", 
+  "dateOfPub": "20-04-2023", "userId": "65001fcdb00eb5c11f34b7df"},
+  { "title": "Rolki agresywne Roces", "location": "Krakow", "image": "dadsads", "description": "Sprzedam rolki w dobrym stanie", 
+  "dateOfPub": "04-04-2023", "userId": "65001fcdb00eb5c11f34b7e0"}
+]
