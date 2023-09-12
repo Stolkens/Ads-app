@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 
-const adScheme = new mongoose.Schema({
-  title: { type: String, required: true },
-  location: { type: String, required: true },
+const adSchema = new mongoose.Schema({
+  title: { type: String, required: true, minLength: 10, maxLength: 50 },
+  description: { type: String, required: true, minLength: 20, maxLength: 1000 },
+  dateOfPub: { type: Date, required: true },
   image: { type: String, required: true },
-  description: { type: String, required: true },
-  dateOfPub: { type: String, required: true },
-  user: { type: String, required: true, ref: 'User' },
+  price: { type: Number, required: true },
+  location: { type: String, required: true },
+  userId: { type: String, required: true, ref: 'User' },
 });
 
-module.exports = mongoose.model('Ad', adScheme);
+module.exports = mongoose.model('Ad', adSchema);
