@@ -2,22 +2,29 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const cors = require("cors");
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const adsRoutes = require('./routes/ads.routes');
+const authRoutes = require('./routes/auth.routes');
 
 const app = express();
+
+mongoose.connect('mongodb://127.0.0.1:27017/AdsAppDB', { useNewUrlParser: true, useUnifiedTopology: true });
+const db = mongoose.connection;
+
+db.once('open', () => {
+  console.log('Connected to the database');
+});
+
+db.on('error', (err) => console.log('Error ' + err));
 
 // app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-const adsRoutes = require('./routes/ads.routes');
-// const usersRoutes = require('./routes/users.routes');
-const authRoutes = require('./routes/auth.routes');
+app.use(session({ secret: 'xyz567', store: MongoStore.create(mongoose.connection), resave: false, saveUninitialized: false }));
 
 app.use('/api', adsRoutes);
-// app.use('/api', usersRoutes);
 app.use('/auth', authRoutes);
-
-
 
 app.use(express.static(path.join(__dirname, "/client/build")));
 
@@ -32,15 +39,6 @@ app.use((req, res) => {
 const server = app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running...');
 });
-
-mongoose.connect('mongodb://127.0.0.1:27017/AdsAppDB', { useNewUrlParser: true, useUnifiedTopology: true });
-const db = mongoose.connection;
-
-db.once('open', () => {
-  console.log('Connected to the database');
-});
-
-db.on('error', (err) => console.log('Error ' + err));
 
 
 module.exports = server;
