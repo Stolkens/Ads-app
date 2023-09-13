@@ -7,9 +7,11 @@ const app = express();
 
 const adsRoutes = require('./routes/ads.routes');
 // const usersRoutes = require('./routes/users.routes');
+const authRoutes = require('./routes/auth.routes');
 
 app.use('/api', adsRoutes);
 // app.use('/api', usersRoutes);
+app.use('/auth', authRoutes);
 
 app.use(cors());
 app.use(express.json());
@@ -32,15 +34,11 @@ const server = app.listen(process.env.PORT || 8000, () => {
 mongoose.connect('mongodb://127.0.0.1:27017/AdsAppDB', { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
-// on success
 db.once('open', () => {
   console.log('Connected to the database');
 });
 
-// on error
 db.on('error', (err) => console.log('Error ' + err));
-
-
 
 
 module.exports = server;
