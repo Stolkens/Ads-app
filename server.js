@@ -5,6 +5,10 @@ const cors = require("cors");
 
 const app = express();
 
+// app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 const adsRoutes = require('./routes/ads.routes');
 // const usersRoutes = require('./routes/users.routes');
 const authRoutes = require('./routes/auth.routes');
@@ -13,9 +17,7 @@ app.use('/api', adsRoutes);
 // app.use('/api', usersRoutes);
 app.use('/auth', authRoutes);
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
 
 app.use(express.static(path.join(__dirname, "/client/build")));
 
