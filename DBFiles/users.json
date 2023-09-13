@@ -1,5 +1,5 @@
 [
-  { "login": "Nikoś", "avatar": "dasdsads", "phone": "506-459-856"},
-  { "login":  "Perszing", "avatar": "dasdsads", "phone": "506-111-856"},
-  { "login": "Capone", "avatar": "dasdsads","phone": "506-222-856"}
+  { "login": "Nikoś", "password": "blebleble", "avatar": "dasdsads", "phone": "506-459-856"},
+  { "login":  "Perszing", "password": "blebleble", "avatar": "dasdsads", "phone": "506-111-856"},
+  { "login": "Capone", "password": "blebleble", "avatar": "dasdsads","phone": "506-222-856"}
 ]
