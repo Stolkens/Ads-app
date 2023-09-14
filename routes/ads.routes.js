@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
 AdsController = require('../controllers/ads.controller');
+const authMiddleware = require('../utils/authMiddleware');
 
 router.get('/ads', AdsController.getAll);
 
 router.get('/ads/:id', AdsController.getAd);
 
-router.post('/ads', AdsController.addAd);
+router.post('/ads', authMiddleware, AdsController.addAd);
 
-router.put('/ads/:id', AdsController.updateAd);
+router.put('/ads/:id', authMiddleware, AdsController.updateAd);
 
-router.delete('/ads/:id', AdsController.deleteAd);
+router.delete('/ads/:id', authMiddleware, AdsController.deleteAd);
 
 router.get('/ads/search/:searchPhrase', AdsController.searchAd)
 
