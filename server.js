@@ -6,6 +6,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const adsRoutes = require('./routes/ads.routes');
 const authRoutes = require('./routes/auth.routes');
+const process = require('./nodemon.json');
 
 const app = express();
 
@@ -29,7 +30,7 @@ if(process.env.NODE_ENV !== 'production') {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(session({
-  secret: 'xyz567',
+  secret: process.env.SECRET,
   cookie: {
     secure: process.env.NODE_ENV == 'production',
   },
