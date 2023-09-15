@@ -28,7 +28,7 @@ exports.getAd = async (req, res) => {
 exports.addAd = async (req, res) => {
 
   try {
-    const { title, description, dateOfPub, image, price, location, user } = req.body;
+    const { title, description, dateOfPub, image, price, location } = req.body;
     const newAd = new Ad(
       {
         title: title,
@@ -37,7 +37,7 @@ exports.addAd = async (req, res) => {
         image: image,
         price: price,
         location: location,
-        user: user
+        user: req.session.user.userId
       });
     await newAd.save();
     res.json({ message: 'OK' });
@@ -52,10 +52,10 @@ exports.updateAd = async (req, res) => {
 
 
   try {
-    const { title, description, dateOfPub, image, price, location, user } = req.body;
+    const { title, description, dateOfPub, image, price, location } = req.body;
     const dep = await Ad.findById(req.params.id);
     if (dep) {
-      await Ad.updateOne({ _id: req.params.id }, { $set: { title: title, description: description, dateOfPub: dateOfPub, image: image, price: price, location: location, user: user} });
+      await Ad.updateOne({ _id: req.params.id }, { $set: { title: title, description: description, dateOfPub: dateOfPub, image: image, price: price, location: location, user: req.session.user.userId} });
       res.json({ message: 'OK' });
     }
     else res.status(404).json({ message: 'Not found...' });
