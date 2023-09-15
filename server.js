@@ -18,10 +18,23 @@ db.once('open', () => {
 
 db.on('error', (err) => console.log('Error ' + err));
 
-// app.use(cors());
+if(process.env.NODE_ENV !== 'production') {
+  app.use(
+    cors({
+      origin: ['http://localhost:3000'],
+      credentials: true,
+    })
+  );
+}
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(session({ secret: 'xyz567', store: MongoStore.create(mongoose.connection), resave: false, saveUninitialized: false }));
+app.use(session({
+  secret: 'xyz567',
+  cookie: {
+    secure: process.env.NODE_ENV == 'production',
+  },
+  store: MongoStore.create(mongoose.connection), resave: false, saveUninitialized: false
+}));
 
 app.use('/api', adsRoutes);
 app.use('/auth', authRoutes);
