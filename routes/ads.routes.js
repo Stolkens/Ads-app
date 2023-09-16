@@ -2,12 +2,13 @@ const express = require('express');
 const router = express.Router();
 AdsController = require('../controllers/ads.controller');
 const authMiddleware = require('../utils/authMiddleware');
+const imageUpload = require('../utils/imageUpload');
 
 router.get('/ads', AdsController.getAll);
 
 router.get('/ads/:id', AdsController.getAd);
 
-router.post('/ads', authMiddleware, AdsController.addAd);
+router.post('/ads', authMiddleware, imageUpload.single('image') ,AdsController.addAd);
 
 router.put('/ads/:id', authMiddleware, AdsController.updateAd);
 
