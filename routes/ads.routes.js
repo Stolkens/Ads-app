@@ -8,9 +8,9 @@ router.get('/ads', AdsController.getAll);
 
 router.get('/ads/:id', AdsController.getAd);
 
-router.post('/ads', authMiddleware, imageUpload.single('image') ,AdsController.addAd);
+router.post('/ads', authMiddleware, imageUpload.single('image'), AdsController.addAd);
 
-router.put('/ads/:id', authMiddleware, AdsController.updateAd);
+router.put('/ads/:id', authMiddleware, imageUpload.single('image'), AdsController.updateAd);
 
 router.delete('/ads/:id', authMiddleware, AdsController.deleteAd);
 

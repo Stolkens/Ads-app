@@ -34,9 +34,9 @@ exports.addAd = async (req, res) => {
     const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
 
 
-    if (title && 
-      typeof title === 'string' && 
-      description && 
+    if (title &&
+      typeof title === 'string' &&
+      description &&
       typeof description === 'string' &&
       req.file &&
       ['image/png', 'image/jpeg', 'image/gif'].includes(fileType) &&
@@ -46,24 +46,24 @@ exports.addAd = async (req, res) => {
       typeof location === 'string' &&
       price &&
       typeof price === 'string'
-      ){
-        const newAd = new Ad(
-          {
-            title: title,
-            description: description,
-            dateOfPub: dateOfPub,
-            image: req.file.filename,
-            price: price,
-            location: location,
-            user: req.session.user.userId
-          });
-        await newAd.save();
-        res.json({ message: 'OK' });
-      } else {
-        fs.unlinkSync(`./public/uploads/${req.file.filename}`);
-        res.status(400).json({ message: 'Bad request' });
-      }
-    
+    ) {
+      const newAd = new Ad(
+        {
+          title: title,
+          description: description,
+          dateOfPub: dateOfPub,
+          image: req.file.filename,
+          price: price,
+          location: location,
+          user: req.session.user.userId
+        });
+      await newAd.save();
+      res.json({ message: 'OK' });
+    } else {
+      fs.unlinkSync(`./public/uploads/${req.file.filename}`);
+      res.status(400).json({ message: 'Bad request' });
+    }
+
 
   } catch (err) {
     res.status(500).json({ message: err });
@@ -75,13 +75,64 @@ exports.updateAd = async (req, res) => {
 
 
   try {
-    const { title, description, dateOfPub, image, price, location } = req.body;
-    const dep = await Ad.findById(req.params.id);
-    if (dep) {
-      await Ad.updateOne({ _id: req.params.id }, { $set: { title: title, description: description, dateOfPub: dateOfPub, image: image, price: price, location: location, user: req.session.user.userId} });
-      res.json({ message: 'OK' });
+    const { title, description, dateOfPub, price, location } = req.body;
+    const ad = await Ad.findById(req.params.id);
+
+    if (ad.user === req.session.user.userId) {
+      if (title &&
+        typeof title === 'string' &&
+        description &&
+        typeof description === 'string' &&
+        dateOfPub &&
+        typeof dateOfPub === 'string' &&
+        location &&
+        typeof location === 'string' &&
+        price &&
+        typeof price === 'string'
+      ) {
+        if (req.file)  {
+          const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
+          if (['image/png', 'image/jpeg', 'image/gif'].includes(fileType)) {
+            await Ad.updateOne({ _id: req.params.id }, {
+              $set:
+              {
+                title: title,
+                description: description,
+                dateOfPub: dateOfPub,
+                image: req.file.filename,
+                price: price,
+                location: location,
+              }
+            });
+            fs.unlinkSync(`./public/uploads/${ad.image}`);
+            res.json({ message: 'OK' });
+          } 
+          else res.status(404).json({ message: 'Not found...' }); 
+          
+        }
+        else {
+          if (ad) {
+            const updatedAd = {
+              title,
+              description,
+              dateOfPub,
+              location,
+              price,
+            };
+          
+            const updatedAdDocument = await Ad.findByIdAndUpdate(
+              req.params.id,
+              updatedAd,
+              { new: true }
+            );
+            res.status(200).json(updatedAdDocument);
+          } 
+          else res.status(404).json({ message: 'Not found...' }); 
+        }
+      }
+      else res.status(404).json({ message: 'Not found...' });
     }
-    else res.status(404).json({ message: 'Not found...' });
+    else res.json({ message: 'You are not authorized' });
   }
   catch (err) {
     res.status(500).json({ message: err });
