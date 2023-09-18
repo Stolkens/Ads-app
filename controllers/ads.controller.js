@@ -142,10 +142,10 @@ exports.updateAd = async (req, res) => {
 
 exports.deleteAd = async (req, res) => {
   try {
-    const dep = await Ad.findById(req.params.id);
-    if (dep) {
+    const ad = await Ad.findById(req.params.id);
+    if (ad) {
       await Ad.deleteOne({ _id: req.params.id });
-      fs.unlinkSync(`./public/uploads/${req.params.image}`);
+      fs.unlinkSync(`./public/uploads/${ad.image}`);
       res.json({ message: 'OK' });
     }
     else res.status(404).json({ message: 'Not found...' });
