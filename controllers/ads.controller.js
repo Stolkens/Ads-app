@@ -145,6 +145,7 @@ exports.deleteAd = async (req, res) => {
     const dep = await Ad.findById(req.params.id);
     if (dep) {
       await Ad.deleteOne({ _id: req.params.id });
+      fs.unlinkSync(`./public/uploads/${req.params.image}`);
       res.json({ message: 'OK' });
     }
     else res.status(404).json({ message: 'Not found...' });
