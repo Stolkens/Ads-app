@@ -1,10 +1,17 @@
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import "./styles/global.scss";
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import { BrowserRouter as Router } from "react-router-dom";
 
 const container = document.querySelector('#root');
 const root = createRoot(container);
 
 root.render(
-  <App />
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>
   );
