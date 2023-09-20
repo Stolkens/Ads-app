@@ -1,8 +1,8 @@
 
 *.tmp
 
-/client/node_modules
-/node_modules
+client/node_modules/
+node_modules/
 
 nodemon.json
 
