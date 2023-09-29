@@ -1,9 +1,11 @@
+import MainLayout from "./components/layout/MainLayout/MainLayout"
 
 const App = () => {
   return (
-    <div>
-      <h1>Ads-app</h1>
-    </div>
+    <MainLayout>
+      
+
+    </MainLayout>
   );
 }
 
