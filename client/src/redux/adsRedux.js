@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { API_URL } from "../config";
 /* SELECTORS */
 export const getAds = ({ ads }) => ads;
@@ -13,19 +14,15 @@ export const loadAds = (payload) => ({ type: LOAD_ADS, payload });
 export const addAd = (payload) => ({ type: ADD_AD, payload });
 
 /* THUNKS */
+
 export const loadAdsRequest = () => {
   return async (dispatch) => {
-    dispatch(loadAds(null));
-
+    dispatch(loadAds(""));
     try {
-      let response = await fetch(`${API_URL}/ads`);
-      let data = await response.json();
-      dispatch(loadAds(data));
-      console.log('data', data);
-      console.log('response', response);
-      
-    } catch (error) {
-      console.log(error);
+      let res = await axios.get(`${API_URL}/ads`);
+      dispatch(loadAds(res.data));
+    } catch (e) {
+      console.log(e);
     }
   };
 };
@@ -33,23 +30,12 @@ export const loadAdsRequest = () => {
 export const addAdRequest = (ad) => {
   return async (dispatch) => {
     try {
-      let response = await fetch(`${API_URL}/ads`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(ad),
+      await axios.post(`${API_URL}/ads`, ad, {
+        withCredentials: true,
       });
-
-      if (!response.ok) {
-        throw new Error(`Request failed with status: ${response.status}`);
-      }
-
-      let data = await response.json();
-      dispatch(addAd(data));
-     
-    } catch (error) {
-      console.log(error);
+      dispatch(loadAdsRequest());
+    } catch (e) {
+      console.log(e);
     }
   };
 };
