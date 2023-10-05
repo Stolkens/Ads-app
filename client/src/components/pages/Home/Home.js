@@ -1,9 +1,9 @@
-import GeneratedAds from "../../feauters/GeneratedAds"
+import GeneratedAds from "../../feauters/GeneratedAds/GeneratedAds"
 
 
 const Home = () => {
   return (
- <GeneratedAds />
+    <GeneratedAds />
   );
 }
 
