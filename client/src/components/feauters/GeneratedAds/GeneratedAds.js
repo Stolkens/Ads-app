@@ -22,7 +22,7 @@ const GeneratedAds = () => {
 
   return (
     <div>
-      <InputGroup className="mb-3" style={{ width: '300px' }}>
+      <InputGroup className="mb-3 mt-3" style={{ width: '300px' }}>
         <Form.Control
           type="text"
           placeholder="Search ads..."
@@ -36,7 +36,7 @@ const GeneratedAds = () => {
         </Link>
 
       </InputGroup>
-      <div className={`${styles.container} mt-3 mb-3`}>
+      <div className={`${styles.container} my-5`}>
         {ads.map(ad =>
           <Card key={ad._id} className={styles.card} style={{ width: '20rem' }}>
             <Card.Img className={styles.image} variant="top" src={`http://localhost:8000/uploads/${ad.image}`} />

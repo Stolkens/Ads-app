@@ -8,6 +8,7 @@ const App = () => {
   return (
     <MainLayout>
       <Routes>
+        {/* <Route path="/adEdit/:id" element={<AdEdit />} /> */}
         <Route path="/search/:searchTerm" element={<SearchAds />} />
         <Route path="/:id" element={<AdPage />}/>
         <Route path="/" element={<Home />}/>
