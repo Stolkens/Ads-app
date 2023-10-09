@@ -15,6 +15,7 @@ const GeneratedAds = () => {
   const ads = useSelector(getAds);
   const [searchTerm, setSearchTerm] = useState('');
 
+
   useEffect(() => {
     dispatch(loadAdsRequest())
   }, [dispatch]);
@@ -36,7 +37,6 @@ const GeneratedAds = () => {
 
       </InputGroup>
       <div className={`${styles.container} mt-3 mb-3`}>
-
         {ads.map(ad =>
           <Card key={ad._id} className={styles.card} style={{ width: '20rem' }}>
             <Card.Img className={styles.image} variant="top" src={`http://localhost:8000/uploads/${ad.image}`} />
@@ -51,8 +51,6 @@ const GeneratedAds = () => {
         )}
       </div>
     </div>
-
-
   );
 }
 
