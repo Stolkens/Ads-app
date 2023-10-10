@@ -50,6 +50,7 @@ const GeneratedAds = () => {
           </Card>
         )}
       </div>
+      <Link to={`/add`}><Button variant="outline-secondary">Add advertisment</Button></Link>
     </div>
   );
 }

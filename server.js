@@ -22,7 +22,7 @@ db.on('error', (err) => console.log('Error ' + err));
 if(process.env.NODE_ENV !== 'production') {
   app.use(
     cors({
-      origin: ['http://localhost:3000'],
+      origin: ['http://localhost:3000', "http://localhost:8000"],
       credentials: true,
     })
   );
